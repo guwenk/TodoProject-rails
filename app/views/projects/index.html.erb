@@ -1,19 +1,56 @@
+<%= javascript_include_tag "application" %>
+<style type="text/css">
+   .block1 { 
+    width: 200px; 
+    background: #ccc;
+    padding: 5px;
+    padding-right: 20px; 
+    border: solid 1px black; 
+    float: left;
+   }
+   .block2 { 
+    width: 200px; 
+    background: #fc0; 
+    padding: 5px; 
+    border: solid 1px black; 
+    float: left; 
+    position: relative; 
+    top: 40px; 
+    left: -70px; 
+   }
+  </style> 
+
+<h1>Задачи</h1>
+<br>
 <table>
   <% @projects.each do |project| %>
     <tr>
-      <td><%= project.title %></td>
-      <td><%= link_to 'Show', project_path(project) %></td>
-      <td><%= link_to 'Edit', edit_project_path(project) %></td>
-      <td><%= link_to 'Destroy', project_path(project),
-              method: :delete,
-              data: { confirm: 'Are you sure?' } %></td>
-      <% project.todos.each do |todo| %>
-      	<p>
-		  <strong>Todos:</strong>
-		  <%= todo.text %>
-		  <%= todo.isCompleted %>
-		</p>
-      <% end %>
+      <h3><%= project.title %></h3>
+      <table>
+        <% project.todos.each do |todo| %>
+          <p>
+            <li><%= todo.text %></li>
+            <!--<%= todo.isCompleted %>-->
+          </p>
+        <% end %>
+      </table>
     </tr>
   <% end %>
-</table>
+
+<%= link_to image_tag('addTodoIcon.png'), "javascript:;", :onclick => "$('#myDiv').show()"%>
+
+<div id = "myDiv" style="display: none;">
+  </table>
+    <%= form_with model: [@projects.first, @todo], :html=> {:id => 'form_id'}, local: true do |form| %>
+    <p>
+      <%= form.text_field :text  , placeholder: "Название задачи"%>
+    </p>
+    <p>
+      <%=form.collection_select(:project_id, Project.all, :id, :title)%>
+    </p>
+    <p>
+      <%= link_to 'ОТМЕНА', "javascript:;", :onclick => "$('#myDiv').hide()" %>
+      <%= link_to 'OK', "javascript:;", :onclick => "$('#form_id').submit()" %>
+    </p>
+  <% end %>
+</div>

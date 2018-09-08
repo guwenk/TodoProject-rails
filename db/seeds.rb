@@ -9,11 +9,14 @@ seed_file = File.join(Rails.root, 'db', 'seeds.yml')
 hash = HashWithIndifferentAccess.new(YAML::load_file(seed_file))
 
 hash["projects"].each do |project|
-	
-	Project.create(puts project["title"])
+	project_obj = Project.create(title: project["title"])
 	project["todos"].each do |todo|
-		Todo.create(puts todo["text"])
+		Todo.create(text: todo["text"], isCompleted: todo["isCompleted"], project_id: project_obj.id)
 	end
 end
+#project = Project.create(title: "test")
+#Todo.create(text: "123", isCompleted: true, project_id: project.id)
+
+
 #Project.create(config["projects"])
 #Todo.create(config["todos"])

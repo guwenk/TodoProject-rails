@@ -11,5 +11,11 @@
 // about supported directives.
 //
 //= require rails-ujs
+//= require jquery
+//= require jquery_ujs
 //= require activestorage
 //= require_tree .
+$(document).ready(function() {
+	//$('#myDiv').hide()
+	//$('#myDiv').show()
+});

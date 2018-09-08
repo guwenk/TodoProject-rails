@@ -1,10 +1,12 @@
 class TodosController < ApplicationController
 	def create
-		@project = Project.find(params[:project_id])
-		@todo = @project.todo.create(todo_params)
-		redirect_to project_path(@project)
+		params = project_params
+		todo = Todo.new(text: params[:text], isCompleted: false, project_id: params[:project_id])
+		todo.save
+		redirect_to root_path
 	end
 
-	private def todo_params
-		params.require(:todo).permit(:text, :isCompleted)
+	private def project_params
+		params.require(:todo).permit(:project_id, :text)
+	end
 end
