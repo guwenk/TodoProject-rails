@@ -21,7 +21,7 @@
 
 <div id = "myDiv" style="display: none;">
   </table>
-    <%= form_with model: [@projects.first, @todo], :html=> {:id => 'form_id'}, local: true do |form| %>
+    <%= form_with model: [@project, @todo], :html=> {:id => 'form_id'}, local: true do |form| %>
     <p>
       <%= form.text_field :text  , placeholder: "Название задачи"%>
     </p>
