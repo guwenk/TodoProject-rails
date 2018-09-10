@@ -2,20 +2,12 @@
 
 <h1>Задачи</h1>
 <br>
-<table>
-  <% @projects.each do |project| %>
-    <tr>
-      <h3><%= project.title %></h3>
-      <table>
-        <% project.todos.each do |todo| %>
-          <p>
-            <li><%= todo.text %></li>
-            <!--<%= todo.isCompleted %>-->
-          </p>
-        <% end %>
-      </table>
-    </tr>
+<% @projects.each do |project| %>
+  <h3><%= project.title %></h3>
+  <% project.todos.each do |todo| %>
+    <li><%= todo.text %></li>
   <% end %>
+<% end %>
 
 <%= link_to image_tag('addTodoIcon.png'), "javascript:;", :onclick => "$('#myDiv').show()"%>
 
