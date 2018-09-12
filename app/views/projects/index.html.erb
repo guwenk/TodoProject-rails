@@ -1,28 +1,43 @@
 <%= javascript_include_tag "application" %>
+<%= stylesheet_link_tag "application" %>
+<html>
+  <body>
 
-<h1>Задачи</h1>
-<br>
-<% @projects.each do |project| %>
-  <h3><%= project.title %></h3>
-  <% project.todos.each do |todo| %>
-    <li><%= todo.text %></li>
-  <% end %>
-<% end %>
+    <header>
+      <div></div>
+      <div id="headerTitle">Задачи</div>
+      <%= link_to image_tag('addTodoIcon.png', id:"addTodoIcon"), "javascript:;", :onclick => "$('#todoAddBackground').show()"%>
+    </header>
 
-<%= link_to image_tag('addTodoIcon.png'), "javascript:;", :onclick => "$('#myDiv').show()"%>
+    <div class="container-fluid">
+      <div class="row">
+        <% @projects.each do |project| %>
+          <div class="column">
+            <div class="todoBox">
+              <div class="todoTitle"><%= project.title %></div>
+              <% project.todos.each do |todo| %>
+                <label class="todoText"><%= check_box("isCompleted", todo.id, {checked: todo.isCompleted}) %><%=todo.text %></label><br>
+              <% end %>
+          </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
 
-<div id = "myDiv" style="display: none;">
-  </table>
-    <%= form_with model: [@project, @todo], :html=> {:id => 'form_id'}, local: true do |form| %>
-    <p>
-      <%= form.text_field :text  , placeholder: "Название задачи"%>
-    </p>
-    <p>
-      <%=form.collection_select(:project_id, Project.all, :id, :title)%>
-    </p>
-    <p>
-      <%= link_to 'ОТМЕНА', "javascript:;", :onclick => "$('#myDiv').hide()" %>
-      <%= link_to 'OK', "javascript:;", :onclick => "$('#form_id').submit()" %>
-    </p>
-  <% end %>
-</div>
+    <div id="todoAddBackground" style="display: none;">
+      <div id = "todoAddDialog">
+        <div id = "todoAddTitle">Новая задача</div>
+        <div id = "todoAddForm">
+          <%= form_with model: [@project, @todo], :html=> {:id => 'form_id'}, local: true do |form| %>
+            <p><%= form.text_field :text, placeholder: "Название задачи...", autocomplete: 'off'%></p>
+            <p><%=form.collection_select(:project_id, Project.all, :id, :title)%></p>
+            <p id="todoAdd_buttons">
+              <%= link_to 'ОТМЕНА', "javascript:;", :onclick => "$('#todoAddBackground').hide()", id: "todoAdd_cancel_btn" %>
+              <%= link_to 'OK', "javascript:;", :onclick => "$('#form_id').submit()", id: "todoAdd_ok_btn" %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

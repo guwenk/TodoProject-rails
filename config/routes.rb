@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   get 'projects/index'
 
   resources :projects do
-  	resources :todos
+  	resources :todos do
+  		post 'toggle'
+  	end
   end
 
   root 'projects#index'

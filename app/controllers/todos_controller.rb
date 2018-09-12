@@ -6,6 +6,11 @@ class TodosController < ApplicationController
 		redirect_to root_path
 	end
 
+	def toggle
+		Todo.update(params[:todo_id], isCompleted: params[:isCompleted])
+		puts params[:todo_id]
+	end
+
 	private def project_params
 		params.require(:todo).permit(:project_id, :text)
 	end
