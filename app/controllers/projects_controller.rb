@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
 		@todo = Todo.new
 		respond_to do |format|
 			format.html # index.html.erb
-  			format.json { render json: @projects }
+  			format.json { render json: @projects.to_json(:include => :todos) }
 		end
 	end
 
