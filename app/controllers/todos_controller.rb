@@ -1,4 +1,11 @@
 class TodosController < ApplicationController
+	def index
+		@todos = Todo.all
+		respond_to do |format|
+  			format.json { render json: @todos }
+		end
+	end
+	
 	def create
 		params = project_params
 		todo = Todo.new(text: params[:text], isCompleted: false, project_id: params[:project_id])

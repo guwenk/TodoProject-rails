@@ -3,6 +3,10 @@ class ProjectsController < ApplicationController
 		@projects = Project.all
 		@project = Project.new(id: 0)
 		@todo = Todo.new
+		respond_to do |format|
+			format.html # index.html.erb
+  			format.json { render json: @projects }
+		end
 	end
 
 	private def project_params
